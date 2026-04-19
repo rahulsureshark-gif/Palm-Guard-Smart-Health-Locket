@@ -2,62 +2,83 @@
 
 ## Overview
 
-PalmGuard is a wearable IoT-based health monitoring system designed in the form of a compact locket. It continuously tracks key vital parameters and provides real-time insights through a connected web dashboard and mobile interface.
-
-The system focuses on making health monitoring simple, passive, and accessible without requiring constant user interaction.
+PalmGuard is a wearable IoT-based health monitoring system designed as a compact locket. It continuously tracks essential health parameters and provides real-time insights through a connected web dashboard and mobile application.
 
 ---
 
 ## Problem
 
-Most existing solutions either monitor limited parameters or require active user involvement. There is a lack of an affordable, compact device that can continuously track multiple health metrics and provide meaningful insights in real time.
+Most health monitoring solutions either track limited vitals or require manual interaction. There is a need for an affordable and compact system that can continuously monitor multiple health parameters.
 
 ---
 
 ## Solution
 
-PalmGuard combines multiple sensors with an ESP32-based system to collect and process health data. The data is analyzed for abnormal patterns and then synced to a web platform where users can view their health status and history.
+PalmGuard integrates multiple sensors with an ESP32-based system to collect and process health data and sync it to a web platform.
 
 ---
 
 ## Key Features
 
 * Continuous monitoring of temperature, heart rate, and SpO₂
-* Respiratory signal tracking using a MEMS microphone
-* Real-time anomaly detection and alerts
-* Web dashboard for live data and history
-* Mobile app support
+* Respiratory signal tracking
+* Real-time anomaly detection
+* Web dashboard + mobile app
 * Secure data transmission
 
 ---
 
 ## Tech Stack
 
-**Hardware:**
-ESP32, MAX30102, MLX90614, INMP441
-
-**Software:**
-Arduino (firmware), Web dashboard, Mobile interface
+Hardware: ESP32, MAX30102, MLX90614, INMP441
+Software: Arduino, Web App, Capacitor
 
 ---
 
-## System Workflow
+## Run the Project
 
-Sensor data is collected through the wearable device and processed on the ESP32.
-Basic anomaly checks are performed at the device level, and the data is then transmitted securely to the web application for visualization and tracking.
+Clone repo:
+git clone https://github.com/rahulsureshark-gif/Palm-Guard-Smart-Health-Locket.git
+
+Go to folder:
+cd Palm-Guard-Smart-Health-Locket
+
+Install:
+npm install
+
+Run:
+Open www/index.html in browser
+(or use Live Server)
 
 ---
 
-## Outcome
+## Build Android App (Capacitor)
 
-The project demonstrates a practical approach to continuous health monitoring using affordable hardware and a simple user interface, making it suitable for real-world usage and further development.
+Install:
+npm install @capacitor/core @capacitor/cli
+
+Init:
+npx cap init
+
+Add Android:
+npx cap add android
+
+Copy files:
+npx cap copy
+
+Open Android Studio:
+npx cap open android
+
+Run from Android Studio ▶️
 
 ---
 
 ## Project Context
 
-Developed as part of the BMSE Hackathon under the IoT healthcare domain.
+BMSE Hackathon – IoT Healthcare
 
 ---
-# Palm-Guard-Smart-Health-Locket
-Smart IoT-based wearable health monitoring system with mobile app and web dashboard for real-time tracking of temperature, heart rate, SpO₂, and anomaly detection.
+
+## Author
+
+Rahul B S
