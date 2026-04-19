@@ -1,0 +1,2139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>VitalCare — PalmGuard Health Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ══════════════════════════════════════════════════
+   DESIGN SYSTEM — Medical Luxury Light Theme
+   Inspired by: Apple Health + Linear + Stripe
+   Palette: Warm white base, deep teal accent,
+            coral urgency, soft sage wellness
+══════════════════════════════════════════════════ */
+:root {
+  --white: #ffffff;
+  --off-white: #fafaf8;
+  --canvas: #f5f4f0;
+  --surface: #ffffff;
+  --surface-raised: #fdfdfc;
+  --border: #e8e5df;
+  --border-light: #f0ede8;
+
+  --ink: #1a1814;
+  --ink-2: #4a4540;
+  --ink-3: #8a857d;
+  --ink-4: #b8b3ac;
+
+  --teal: #0d7a6e;
+  --teal-light: #e8f5f3;
+  --teal-mid: #b3ddd8;
+  --teal-bright: #12a396;
+
+  --coral: #e85d3a;
+  --coral-light: #fdf0ec;
+  --coral-mid: #f4bdb0;
+
+  --amber: #d97706;
+  --amber-light: #fef7ec;
+
+  --sage: #5a8a72;
+  --sage-light: #edf4ef;
+
+  --blue: #2563eb;
+  --blue-light: #eff6ff;
+
+  --shadow-xs: 0 1px 3px rgba(26,24,20,.06), 0 1px 2px rgba(26,24,20,.04);
+  --shadow-sm: 0 2px 8px rgba(26,24,20,.07), 0 1px 3px rgba(26,24,20,.05);
+  --shadow-md: 0 4px 20px rgba(26,24,20,.09), 0 2px 8px rgba(26,24,20,.06);
+  --shadow-lg: 0 8px 40px rgba(26,24,20,.12), 0 4px 16px rgba(26,24,20,.08);
+
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+}
+
+/* ── Reset ── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; overflow:hidden; }
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+/* ══ SHELL ══ */
+.shell { display: flex; height: 100vh; }
+
+/* ══════════════════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════════════════ */
+.sidebar {
+  width: 252px;
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  z-index: 10;
+}
+
+/* Brand */
+.brand-block {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid var(--border-light);
+}
+.brand-mark {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 4px;
+}
+.brand-icon {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--teal), var(--teal-bright));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 12px rgba(13,122,110,.25);
+  flex-shrink: 0;
+}
+.brand-icon svg { width: 18px; height: 18px; fill: none; stroke: white; stroke-width: 2; }
+.brand-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 19px;
+  color: var(--ink);
+  letter-spacing: -.3px;
+}
+.brand-tagline {
+  font-size: 10.5px;
+  color: var(--ink-3);
+  letter-spacing: .4px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+/* ESP32 connection widget */
+.esp-widget {
+  margin: 0 16px;
+  margin-top: 16px;
+  background: var(--canvas);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+}
+.esp-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.esp-input-row { display: flex; gap: 6px; }
+.esp-input {
+  flex: 1;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color .2s;
+}
+.esp-input:focus { border-color: var(--teal); }
+.esp-connect-btn {
+  padding: 8px 12px;
+  background: var(--teal);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: background .2s;
+  white-space: nowrap;
+}
+.esp-connect-btn:hover { background: var(--teal-bright); }
+.esp-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+.status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--ink-4);
+  flex-shrink: 0;
+  transition: background .3s;
+}
+.status-dot.live {
+  background: var(--sage);
+  box-shadow: 0 0 0 2px rgba(90,138,114,.2);
+  animation: livepulse 2s infinite;
+}
+@keyframes livepulse { 0%,100%{opacity:1} 50%{opacity:.5} }
+.esp-status-text { font-size: 11px; color: var(--ink-3); }
+
+/* Nav */
+.nav-section-label {
+  padding: 18px 20px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ink-4);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  margin: 1px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--ink-2);
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: all .18s;
+  position: relative;
+  user-select: none;
+}
+.nav-link:hover { background: var(--canvas); color: var(--ink); }
+.nav-link.active {
+  background: var(--teal-light);
+  color: var(--teal);
+  font-weight: 600;
+}
+.nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: -8px; top: 50%;
+  transform: translateY(-50%);
+  width: 3px; height: 20px;
+  background: var(--teal);
+  border-radius: 0 3px 3px 0;
+}
+.nav-icon-wrap {
+  width: 28px; height: 28px;
+  border-radius: 7px;
+  background: var(--canvas);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background .18s;
+}
+.nav-link.active .nav-icon-wrap { background: rgba(13,122,110,.12); }
+.nav-icon-wrap svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.nav-badge { margin-left: auto; background: var(--coral); color: white; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 20px; }
+
+/* Sidebar bottom */
+.sidebar-bottom { margin-top: auto; padding: 14px 12px 16px; border-top: 1px solid var(--border-light); }
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background .18s;
+}
+.user-card:hover { background: var(--canvas); }
+.user-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a78bfa, var(--teal));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800; color: white;
+  overflow: hidden; flex-shrink: 0;
+}
+.user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.user-name { font-size: 13px; font-weight: 600; color: var(--ink); }
+.user-sub { font-size: 11px; color: var(--ink-3); margin-top: 1px; }
+
+/* ══════════════════════════════════════════════════
+   TOPBAR
+══════════════════════════════════════════════════ */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+
+.topbar {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.page-heading { font-size: 17px; font-weight: 700; color: var(--ink); letter-spacing: -.3px; }
+.page-sub { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+.topbar-right { display: flex; align-items: center; gap: 10px; }
+.tb-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12.5px; font-weight: 600;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: all .18s;
+}
+.tb-btn:hover { background: var(--canvas); border-color: var(--border); color: var(--ink); }
+.tb-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
+.tb-btn.primary {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: white;
+}
+.tb-btn.primary:hover { background: var(--teal-bright); }
+.notif-wrap { position: relative; }
+.notif-btn {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--ink-2);
+  transition: all .18s;
+}
+.notif-btn:hover { background: var(--canvas); }
+.notif-btn svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; }
+.notif-dot {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 7px; height: 7px;
+  background: var(--coral);
+  border-radius: 50%;
+  border: 2px solid white;
+  display: none;
+}
+
+/* ══════════════════════════════════════════════════
+   CONTENT
+══════════════════════════════════════════════════ */
+.content { flex: 1; overflow-y: auto; padding: 24px 28px; }
+.page { display: none; animation: fadeUp .22s ease; }
+.page.active { display: block; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+
+/* ══════════════════════════════════════════════════
+   DASHBOARD
+══════════════════════════════════════════════════ */
+
+/* Hero status card */
+.health-hero {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  margin-bottom: 20px;
+  min-height: 160px;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: var(--shadow-md);
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #0d7a6e 0%, #12a396 50%, #0a6b60 100%);
+}
+.hero-bg-img {
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1200&q=80') center/cover;
+  opacity: .12;
+  mix-blend-mode: luminosity;
+}
+.hero-pattern {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle at 80% 50%, rgba(255,255,255,.08) 0%, transparent 50%),
+                    radial-gradient(circle at 20% 80%, rgba(255,255,255,.05) 0%, transparent 40%);
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 28px 32px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.hero-left .hero-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,.9);
+  margin-bottom: 10px;
+  backdrop-filter: blur(4px);
+}
+.hero-status-chip .chip-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #7efbd0;
+  animation: livepulse 2s infinite;
+}
+.hero-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  color: white;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.hero-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,.75);
+  max-width: 320px;
+  line-height: 1.5;
+}
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+.hero-condition-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255,255,255,.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.hero-condition-value {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: white;
+}
+.hero-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,.5);
+  margin-top: 2px;
+}
+
+/* Vital cards */
+.vitals-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.vital-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-xs);
+  transition: box-shadow .2s, transform .2s;
+}
+.vital-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.vital-card-bg {
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  opacity: .07;
+}
+.vital-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.vital-img {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.vital-img img { width: 100%; height: 100%; object-fit: cover; }
+.vital-status-badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+.vital-status-badge.ok { background: var(--sage-light); color: var(--sage); }
+.vital-status-badge.warn { background: var(--amber-light); color: var(--amber); }
+.vital-status-badge.bad { background: var(--coral-light); color: var(--coral); }
+.vital-number {
+  font-family: 'DM Mono', monospace;
+  font-size: 42px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -2px;
+  margin-bottom: 3px;
+}
+.vital-unit { font-size: 11px; color: var(--ink-3); margin-bottom: 3px; }
+.vital-label { font-size: 12px; color: var(--ink-2); font-weight: 500; }
+.vital-bar {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-top: 14px;
+  overflow: hidden;
+}
+.vital-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 1.4s cubic-bezier(.4,0,.2,1);
+}
+.vital-trend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--ink-3);
+}
+.vital-trend svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+/* Charts */
+.charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.chart-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-xs);
+}
+.chart-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.chart-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.chart-color-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.live-badge {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--sage);
+  background: var(--sage-light);
+  padding: 3px 8px;
+  border-radius: 20px;
+  letter-spacing: .5px;
+  display: flex; align-items: center; gap: 4px;
+}
+.live-badge::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--sage);
+  display: inline-block;
+  animation: livepulse 1.5s infinite;
+}
+
+/* Conditions */
+.section-row {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.conditions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.cond-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  box-shadow: var(--shadow-xs);
+  transition: box-shadow .2s;
+}
+.cond-card:hover { box-shadow: var(--shadow-sm); }
+.cond-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.cond-img {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--canvas);
+}
+.cond-img img { width: 100%; height: 100%; object-fit: cover; }
+.risk-tag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+.risk-tag.low { background: var(--sage-light); color: var(--sage); }
+.risk-tag.medium { background: var(--amber-light); color: var(--amber); }
+.risk-tag.high { background: var(--coral-light); color: var(--coral); }
+.cond-name { font-size: 12px; font-weight: 700; color: var(--ink); margin-bottom: 5px; }
+.cond-desc { font-size: 11px; color: var(--ink-3); line-height: 1.55; }
+
+/* ══════════════════════════════════════════════════
+   CHATBOT
+══════════════════════════════════════════════════ */
+.chat-shell {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  height: calc(100vh - 140px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-raised);
+  flex-shrink: 0;
+}
+.chat-header-img {
+  width: 46px; height: 46px;
+  border-radius: 14px;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+  background: linear-gradient(135deg, var(--teal), var(--teal-bright));
+}
+.chat-header-img img { width: 100%; height: 100%; object-fit: cover; }
+.chat-bot-name { font-size: 15px; font-weight: 700; color: var(--ink); }
+.chat-bot-status {
+  font-size: 11px;
+  color: var(--sage);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+  font-weight: 500;
+}
+.chat-bot-status::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--sage);
+  display: inline-block;
+}
+.chat-vital-pills {
+  margin-left: auto;
+  display: flex;
+  gap: 6px;
+}
+.vital-pill {
+  padding: 5px 11px;
+  background: var(--canvas);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 11px;
+  font-family: 'DM Mono', monospace;
+  color: var(--ink-2);
+}
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.msg-group { display: flex; gap: 10px; align-items: flex-end; max-width: 78%; }
+.msg-group.user { align-self: flex-end; flex-direction: row-reverse; }
+.msg-avatar {
+  width: 30px; height: 30px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--canvas);
+}
+.msg-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.msg-bubble {
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.msg-group:not(.user) .msg-bubble {
+  background: var(--canvas);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 4px;
+}
+.msg-group.user .msg-bubble {
+  background: var(--teal);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+.msg-time {
+  font-size: 10px;
+  color: var(--ink-4);
+  padding: 0 4px;
+  flex-shrink: 0;
+  align-self: flex-end;
+}
+.typing-indicator {
+  display: flex;
+  gap: 4px;
+  padding: 6px 2px;
+  align-items: center;
+}
+.typing-indicator span {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--ink-3);
+  animation: typebounce .9s infinite;
+}
+.typing-indicator span:nth-child(2) { animation-delay: .15s; }
+.typing-indicator span:nth-child(3) { animation-delay: .3s; }
+@keyframes typebounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+.quick-btns-bar {
+  display: flex;
+  gap: 7px;
+  padding: 12px 22px;
+  border-top: 1px solid var(--border);
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+.quick-btns-bar::-webkit-scrollbar { display: none; }
+.q-chip {
+  padding: 6px 14px;
+  background: var(--canvas);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--ink-2);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .18s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 500;
+}
+.q-chip:hover { background: var(--teal-light); border-color: var(--teal-mid); color: var(--teal); }
+.chat-input-row {
+  display: flex;
+  gap: 10px;
+  padding: 14px 22px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+  background: var(--surface-raised);
+}
+.chat-input {
+  flex: 1;
+  background: var(--canvas);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 11px 16px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13.5px;
+  color: var(--ink);
+  outline: none;
+  resize: none;
+  line-height: 1.4;
+  transition: border-color .2s;
+}
+.chat-input:focus { border-color: var(--teal); background: var(--white); }
+.chat-send-btn {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--teal);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background .2s, transform .15s;
+  box-shadow: 0 2px 8px rgba(13,122,110,.3);
+}
+.chat-send-btn:hover { background: var(--teal-bright); transform: scale(1.05); }
+.chat-send-btn svg { width: 16px; height: 16px; fill: none; stroke: white; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ══════════════════════════════════════════════════
+   HISTORY
+══════════════════════════════════════════════════ */
+.hist-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.form-input-sm {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color .2s;
+}
+.form-input-sm:focus { border-color: var(--teal); }
+.action-btn {
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  border: 1px solid;
+  transition: all .18s;
+}
+.action-btn.export { background: var(--sage-light); color: var(--sage); border-color: rgba(90,138,114,.25); }
+.action-btn.clear { background: var(--coral-light); color: var(--coral); border-color: rgba(232,93,58,.25); }
+.action-btn:hover { filter: brightness(.95); }
+.record-count { font-size: 12px; color: var(--ink-3); margin-left: auto; }
+.hist-table-wrap {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-xs);
+}
+.hist-table-wrap table { width: 100%; border-collapse: collapse; }
+.hist-table-wrap th {
+  padding: 12px 16px;
+  background: var(--canvas);
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--ink-3);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.hist-table-wrap td {
+  padding: 12px 16px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border-light);
+  font-family: 'DM Mono', monospace;
+  color: var(--ink-2);
+}
+.hist-table-wrap tr:last-child td { border: none; }
+.hist-table-wrap tr:hover td { background: var(--canvas); }
+.hist-table-wrap td:first-child { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; color: var(--ink); }
+.status-chip {
+  display: inline-flex;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 10.5px;
+  font-weight: 700;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.status-chip.normal { background: var(--sage-light); color: var(--sage); }
+.status-chip.moderate { background: var(--amber-light); color: var(--amber); }
+.status-chip.high { background: var(--coral-light); color: var(--coral); }
+.status-chip.critical { background: var(--coral-light); color: var(--coral); font-weight: 800; }
+
+/* ══════════════════════════════════════════════════
+   EMERGENCY
+══════════════════════════════════════════════════ */
+.emer-hero-banner {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow-md);
+}
+.emer-hero-bg {
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=1200&q=80') center/cover;
+}
+.emer-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(200,30,0,.92) 0%, rgba(180,50,20,.88) 100%);
+}
+.emer-hero-content {
+  position: relative; z-index: 1;
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.emer-hero-icon {
+  width: 60px; height: 60px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  backdrop-filter: blur(8px);
+}
+.emer-hero-icon svg { width: 28px; height: 28px; fill: none; stroke: white; stroke-width: 1.8; }
+.emer-hero-title { font-family: 'DM Serif Display', serif; font-size: 24px; color: white; margin-bottom: 4px; }
+.emer-hero-sub { font-size: 13px; color: rgba(255,255,255,.75); }
+.emer-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 22px;
+}
+.e-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  box-shadow: var(--shadow-xs);
+  transition: box-shadow .2s, transform .2s;
+}
+.e-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.e-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.e-card-img {
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-xs);
+}
+.e-card-img img { width: 100%; height: 100%; object-fit: cover; }
+.e-type {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--ink-3);
+  margin-bottom: 3px;
+}
+.e-name { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+.e-num {
+  font-size: 13px;
+  font-family: 'DM Mono', monospace;
+  color: var(--teal);
+  font-weight: 500;
+}
+.e-call-btn {
+  width: 100%;
+  padding: 11px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  border: 1.5px solid;
+  transition: all .2s;
+}
+.e-card.doc .e-call-btn { background: var(--teal-light); color: var(--teal); border-color: var(--teal-mid); }
+.e-card.amb .e-call-btn { background: var(--coral-light); color: var(--coral); border-color: var(--coral-mid); }
+.e-card.fam .e-call-btn { background: var(--sage-light); color: var(--sage); border-color: rgba(90,138,114,.3); }
+.e-call-btn:hover { filter: brightness(.94); transform: scale(.99); }
+.emer-form-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  box-shadow: var(--shadow-xs);
+}
+.form-box-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 16px; }
+.form-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.form-field label { display: block; font-size: 10.5px; font-weight: 700; color: var(--ink-3); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 5px; }
+.form-field input {
+  width: 100%;
+  background: var(--canvas);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 9px 13px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color .2s;
+}
+.form-field input:focus { border-color: var(--teal); background: var(--white); }
+.save-btn {
+  padding: 10px 22px;
+  background: var(--teal);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: background .2s;
+  box-shadow: 0 2px 8px rgba(13,122,110,.25);
+}
+.save-btn:hover { background: var(--teal-bright); }
+
+/* ══════════════════════════════════════════════════
+   PROFILE
+══════════════════════════════════════════════════ */
+.profile-hero-card {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-md);
+}
+.profile-hero-bg {
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80') center/cover;
+  opacity: .15;
+}
+.profile-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #1e3a5f 0%, #0d7a6e 100%);
+  opacity: .92;
+}
+.profile-hero-content {
+  position: relative; z-index: 1;
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.profile-av-large {
+  width: 72px; height: 72px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 3px solid rgba(255,255,255,.25);
+  flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,.2);
+}
+.profile-av-large img { width: 100%; height: 100%; object-fit: cover; }
+.profile-name-large { font-family: 'DM Serif Display', serif; font-size: 24px; color: white; margin-bottom: 4px; }
+.profile-id-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 20px;
+  font-size: 11px;
+  font-family: 'DM Mono', monospace;
+  color: rgba(255,255,255,.85);
+  margin-bottom: 10px;
+  backdrop-filter: blur(4px);
+}
+.profile-tags-row { display: flex; gap: 7px; flex-wrap: wrap; }
+.profile-tag {
+  padding: 3px 10px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 20px;
+  font-size: 11px;
+  color: rgba(255,255,255,.8);
+  font-weight: 500;
+}
+.profile-cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.profile-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  box-shadow: var(--shadow-xs);
+}
+.profile-card-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.toggle-row:last-of-type { border: none; }
+.toggle-row-label { font-size: 13px; font-weight: 500; color: var(--ink); }
+.toggle-row-sub { font-size: 11px; color: var(--ink-3); margin-top: 1px; }
+.toggle-switch { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-track {
+  position: absolute; inset: 0;
+  background: var(--border);
+  border-radius: 11px;
+  cursor: pointer;
+  transition: background .25s;
+  border: 1px solid var(--border);
+}
+.toggle-switch input:checked + .toggle-track {
+  background: var(--teal);
+  border-color: var(--teal);
+}
+.toggle-track::after {
+  content: '';
+  position: absolute;
+  width: 16px; height: 16px;
+  background: white;
+  border-radius: 50%;
+  top: 2px; left: 2px;
+  transition: transform .25s;
+  box-shadow: var(--shadow-xs);
+}
+.toggle-switch input:checked + .toggle-track::after { transform: translateX(18px); }
+.logout-button {
+  width: 100%;
+  padding: 11px;
+  background: transparent;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--coral);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 16px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: all .18s;
+}
+.logout-button:hover { background: var(--coral-light); border-color: var(--coral-mid); }
+
+/* ══════════════════════════════════════════════════
+   NOTIFICATION DROPDOWN
+══════════════════════════════════════════════════ */
+.notif-dropdown {
+  position: fixed;
+  top: 62px; right: 20px;
+  width: 310px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  z-index: 500;
+  display: none;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.notif-dropdown.open { display: block; animation: fadeUp .18s ease; }
+.notif-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--canvas);
+}
+.notif-top h4 { font-size: 13px; font-weight: 700; color: var(--ink); }
+.notif-clear { font-size: 12px; color: var(--teal); font-weight: 600; cursor: pointer; background: none; border: none; font-family: 'Plus Jakarta Sans', sans-serif; }
+.notif-item {
+  display: flex;
+  gap: 12px;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--border-light);
+  cursor: pointer;
+  transition: background .15s;
+}
+.notif-item:last-child { border: none; }
+.notif-item:hover { background: var(--canvas); }
+.notif-icon {
+  width: 32px; height: 32px;
+  border-radius: 9px;
+  background: var(--teal-light);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.notif-icon svg { width: 15px; height: 15px; fill: none; stroke: var(--teal); stroke-width: 2; }
+.notif-title { font-size: 12.5px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+.notif-desc { font-size: 11.5px; color: var(--ink-3); line-height: 1.4; }
+.notif-time { font-size: 10px; color: var(--ink-4); margin-top: 3px; }
+
+/* ══════════════════════════════════════════════════
+   TOAST NOTIFICATIONS
+══════════════════════════════════════════════════ */
+.toast-container {
+  position: fixed;
+  top: 20px; right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-lg);
+  pointer-events: all;
+  min-width: 280px;
+  max-width: 340px;
+  animation: toastIn .28s cubic-bezier(.34,1.56,.64,1);
+}
+.toast.danger { border-left: 3px solid var(--coral); }
+.toast.success { border-left: 3px solid var(--sage); }
+@keyframes toastIn { from{transform:translateX(110%);opacity:0} to{transform:none;opacity:1} }
+.toast-icon-wrap {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.toast.danger .toast-icon-wrap { background: var(--coral-light); }
+.toast.success .toast-icon-wrap { background: var(--sage-light); }
+.toast-icon-wrap svg { width: 14px; height: 14px; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.toast.danger .toast-icon-wrap svg { stroke: var(--coral); }
+.toast.success .toast-icon-wrap svg { stroke: var(--sage); }
+.toast-message { font-size: 13px; font-weight: 500; color: var(--ink); flex: 1; line-height: 1.4; }
+.toast-close { background: none; border: none; color: var(--ink-4); cursor: pointer; font-size: 18px; line-height: 1; flex-shrink: 0; padding: 0; }
+</style>
+</head>
+<body>
+<!-- Toast container -->
+<div class="toast-container" id="toasts"></div>
+
+<!-- Notification dropdown -->
+<div class="notif-dropdown" id="notifDrop">
+  <div class="notif-top">
+    <h4>Notifications</h4>
+    <button class="notif-clear" onclick="clearNotifs()">Clear all</button>
+  </div>
+  <div id="notifList">
+    <div class="notif-item">
+      <div class="notif-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+      <div>
+        <div class="notif-title">VitalCare Ready</div>
+        <div class="notif-desc">Enter your ESP32 IP address to begin live monitoring</div>
+        <div class="notif-time">Just now</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="shell">
+<!-- ════════ SIDEBAR ════════ -->
+<div class="sidebar">
+  <div class="brand-block">
+    <div class="brand-mark">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">VitalCare</div>
+        <div class="brand-tagline">PalmGuard Health Platform</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="esp-widget">
+    <div class="esp-label">ESP32 Locket</div>
+    <div class="esp-input-row">
+      <input class="esp-input" id="ipInput" placeholder="10.104.238.135" value="10.104.238.135"/>
+      <button class="esp-connect-btn" onclick="connectESP()">Connect</button>
+    </div>
+    <div class="esp-status">
+      <div class="status-dot" id="wsDot"></div>
+      <span class="esp-status-text" id="wsText">Not connected</span>
+    </div>
+  </div>
+
+  <div class="nav-section-label">Monitoring</div>
+  <div class="nav-link active" onclick="navigate('dashboard', this)">
+    <div class="nav-icon-wrap">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+    </div>
+    Health Dashboard
+  </div>
+  <div class="nav-link" onclick="navigate('chatbot', this)">
+    <div class="nav-icon-wrap">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    </div>
+    AI Assistant
+    <span class="nav-badge" id="chatN" style="display:none">1</span>
+  </div>
+
+  <div class="nav-section-label">Records</div>
+  <div class="nav-link" onclick="navigate('history', this)">
+    <div class="nav-icon-wrap">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    </div>
+    Health History
+  </div>
+  <div class="nav-link" onclick="navigate('emergency', this)">
+    <div class="nav-icon-wrap">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.69h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    </div>
+    Emergency
+  </div>
+
+  <div class="nav-section-label">Account</div>
+  <div class="nav-link" onclick="navigate('profile', this)">
+    <div class="nav-icon-wrap">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+    My Profile
+  </div>
+
+  <div class="sidebar-bottom">
+    <div class="user-card" onclick="navigate('profile', null)">
+      <div class="user-avatar">
+        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&h=80&fit=crop&crop=face" onerror="this.style.display='none'" alt="user"/>
+      </div>
+      <div>
+        <div class="user-name">Sakshi Reddy</div>
+        <div class="user-sub">Patient ID: VC-001</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ MAIN ════════ -->
+<div class="main">
+  <div class="topbar">
+    <div>
+      <div class="page-heading" id="pageHeading">Health Dashboard</div>
+      <div class="page-sub" id="pageSub">Real-time vitals from your ESP32 locket</div>
+    </div>
+    <div class="topbar-right">
+      <button class="tb-btn" onclick="exportData()">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export
+      </button>
+      <div class="notif-wrap">
+        <div class="notif-btn" onclick="toggleNotif()">
+          <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </div>
+        <div class="notif-dot" id="notifDot"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+  <!-- ══ DASHBOARD ══ -->
+  <div class="page active" id="page-dashboard">
+
+    <div class="health-hero">
+      <div class="hero-bg"></div>
+      <div class="hero-bg-img"></div>
+      <div class="hero-pattern"></div>
+      <div class="hero-content">
+        <div class="hero-left">
+          <div class="hero-status-chip" id="heroChip">
+            <div class="chip-dot"></div>
+            <span id="heroChipText">All Systems Normal</span>
+          </div>
+          <div class="hero-title" id="heroTitle">Healthy &amp; Monitored</div>
+          <div class="hero-sub" id="heroSub">Your vitals are within healthy range. PalmGuard locket is actively monitoring your health.</div>
+        </div>
+        <div class="hero-right">
+          <div class="hero-condition-label">Detected Condition</div>
+          <div class="hero-condition-value" id="heroCond">Healthy</div>
+          <div class="hero-time" id="heroTime">--:--:--</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vitals-row">
+      <!-- Temperature -->
+      <div class="vital-card">
+        <div class="vital-card-bg" style="background:var(--teal)"></div>
+        <div class="vital-card-top">
+          <div class="vital-img">
+            <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=100&h=100&fit=crop" onerror="this.style.display='none'" alt="temperature"/>
+          </div>
+          <div class="vital-status-badge ok" id="tbadge">Normal</div>
+        </div>
+        <div class="vital-number" id="tv" style="color:var(--teal)">--.-</div>
+        <div class="vital-unit">degrees Celsius</div>
+        <div class="vital-label">Body Temperature</div>
+        <div class="vital-bar"><div class="vital-bar-fill" id="tbar" style="width:50%;background:var(--teal)"></div></div>
+      </div>
+      <!-- Heart Rate -->
+      <div class="vital-card">
+        <div class="vital-card-bg" style="background:var(--coral)"></div>
+        <div class="vital-card-top">
+          <div class="vital-img">
+            <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=100&h=100&fit=crop" onerror="this.style.display='none'" alt="heart"/>
+          </div>
+          <div class="vital-status-badge ok" id="hbadge">Normal</div>
+        </div>
+        <div class="vital-number" id="hv" style="color:var(--coral)">--</div>
+        <div class="vital-unit">Beats Per Minute</div>
+        <div class="vital-label">Heart Rate</div>
+        <div class="vital-bar"><div class="vital-bar-fill" id="hbar" style="width:50%;background:var(--coral)"></div></div>
+      </div>
+      <!-- SpO2 -->
+      <div class="vital-card">
+        <div class="vital-card-bg" style="background:var(--blue)"></div>
+        <div class="vital-card-top">
+          <div class="vital-img">
+            <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?w=100&h=100&fit=crop" onerror="this.style.display='none'" alt="oxygen"/>
+          </div>
+          <div class="vital-status-badge ok" id="sbadge">Normal</div>
+        </div>
+        <div class="vital-number" id="sv" style="color:var(--blue)">--</div>
+        <div class="vital-unit">Blood Oxygen Percent</div>
+        <div class="vital-label">SpO2 Level</div>
+        <div class="vital-bar"><div class="vital-bar-fill" id="sbar" style="width:98%;background:var(--blue)"></div></div>
+      </div>
+      <!-- Breathing -->
+      <div class="vital-card">
+        <div class="vital-card-bg" style="background:var(--sage)"></div>
+        <div class="vital-card-top">
+          <div class="vital-img">
+            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=100&h=100&fit=crop" onerror="this.style.display='none'" alt="breathing"/>
+          </div>
+          <div class="vital-status-badge ok" id="bbadge">Normal</div>
+        </div>
+        <div class="vital-number" id="bv" style="color:var(--sage)">--.-</div>
+        <div class="vital-unit">Breaths Per Minute</div>
+        <div class="vital-label">Breathing Rate</div>
+        <div class="vital-bar"><div class="vital-bar-fill" id="bbar" style="width:40%;background:var(--sage)"></div></div>
+      </div>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div class="chart-card-title"><div class="chart-color-dot" style="background:var(--coral)"></div>Heart Rate Over Time</div>
+          <div class="live-badge">LIVE</div>
+        </div>
+        <canvas id="cHR" height="100"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div class="chart-card-title"><div class="chart-color-dot" style="background:var(--blue)"></div>Blood Oxygen Trend</div>
+          <div class="live-badge">LIVE</div>
+        </div>
+        <canvas id="cSP" height="100"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div class="chart-card-title"><div class="chart-color-dot" style="background:var(--teal)"></div>Temperature Variation</div>
+          <div class="live-badge">LIVE</div>
+        </div>
+        <canvas id="cTM" height="100"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div class="chart-card-title"><div class="chart-color-dot" style="background:var(--sage)"></div>Breathing Waveform</div>
+          <div class="live-badge">LIVE</div>
+        </div>
+        <canvas id="cBR" height="100"></canvas>
+      </div>
+    </div>
+
+    <div class="section-row"><div class="section-title">Detected Health Conditions</div></div>
+    <div class="conditions-grid">
+      <div class="cond-card">
+        <div class="cond-card-top">
+          <div class="cond-img"><img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=80&h=80&fit=crop" onerror="this.style.display='none'" alt="fever"/></div>
+          <div class="risk-tag low" id="rFever">Low Risk</div>
+        </div>
+        <div class="cond-name">Fever / Infection</div>
+        <div class="cond-desc">Temperature above 38C combined with low SpO2 may indicate respiratory infection or COVID-like illness</div>
+      </div>
+      <div class="cond-card">
+        <div class="cond-card-top">
+          <div class="cond-img"><img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=80&h=80&fit=crop" onerror="this.style.display='none'" alt="respiratory"/></div>
+          <div class="risk-tag low" id="rResp">Low Risk</div>
+        </div>
+        <div class="cond-name">Respiratory Distress</div>
+        <div class="cond-desc">SpO2 below 94% with rapid breathing rate suggests asthma, COPD, or breathing difficulty</div>
+      </div>
+      <div class="cond-card">
+        <div class="cond-card-top">
+          <div class="cond-img"><img src="https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=80&h=80&fit=crop" onerror="this.style.display='none'" alt="cardiac"/></div>
+          <div class="risk-tag low" id="rCard">Low Risk</div>
+        </div>
+        <div class="cond-name">Cardiac Risk</div>
+        <div class="cond-desc">Heart rate above 120 or below 50 bpm alongside low oxygen may indicate a potential cardiac concern</div>
+      </div>
+      <div class="cond-card">
+        <div class="cond-card-top">
+          <div class="cond-img"><img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=80&h=80&fit=crop" onerror="this.style.display='none'" alt="stress"/></div>
+          <div class="risk-tag low" id="rStr">Low Risk</div>
+        </div>
+        <div class="cond-name">Stress and Anxiety</div>
+        <div class="cond-desc">Elevated heart rate with normal oxygen and increased breathing often indicates stress or anxiety pattern</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CHATBOT ══ -->
+  <div class="page" id="page-chatbot">
+    <div class="chat-shell">
+      <div class="chat-header">
+        <div class="chat-header-img">
+          <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=100&h=100&fit=crop" onerror="this.parentElement.style.background='linear-gradient(135deg,var(--teal),#12a396)'" alt="AI"/>
+        </div>
+        <div>
+          <div class="chat-bot-name">PalmGuard Assistant</div>
+          <div class="chat-bot-status">Online — Monitoring your health in real time</div>
+        </div>
+        <div class="chat-vital-pills">
+          <div class="vital-pill" id="pillHR">HR: --</div>
+          <div class="vital-pill" id="pillSP">SpO2: --</div>
+          <div class="vital-pill" id="pillBR">Breathing: --</div>
+        </div>
+      </div>
+      <div class="chat-messages" id="chatMsgs">
+        <div class="msg-group">
+          <div class="msg-avatar"><img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=60&h=60&fit=crop" onerror="this.style.background='var(--teal-light)'" alt="bot"/></div>
+          <div>
+            <div class="msg-bubble">Hello, I am your <strong>PalmGuard AI Health Assistant</strong>.<br><br>I am connected to your ESP32 locket and continuously monitoring your body temperature, heart rate, SpO2, and breathing frequency.<br><br>I can analyze your vitals in real time, detect potential health risks, and provide personalized wellness guidance. What would you like to know today?</div>
+            <div class="msg-time">now</div>
+          </div>
+        </div>
+      </div>
+      <div class="quick-btns-bar">
+        <button class="q-chip" onclick="quickSend('Analyze my current vitals')">Analyze my vitals</button>
+        <button class="q-chip" onclick="quickSend('Am I at risk for any condition?')">Check my risk</button>
+        <button class="q-chip" onclick="quickSend('What does my breathing rate indicate?')">Breathing analysis</button>
+        <button class="q-chip" onclick="quickSend('How can I improve my SpO2?')">Improve SpO2</button>
+        <button class="q-chip" onclick="quickSend('What diseases can be detected from my vitals?')">Disease detection</button>
+        <button class="q-chip" onclick="quickSend('What are the normal ranges for all vitals?')">Normal ranges</button>
+      </div>
+      <div class="chat-input-row">
+        <textarea class="chat-input" id="chatIn" rows="1" placeholder="Ask anything about your health..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg()}"></textarea>
+        <button class="chat-send-btn" onclick="sendMsg()">
+          <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ HISTORY ══ -->
+  <div class="page" id="page-history">
+    <div class="hist-toolbar">
+      <input type="date" class="form-input-sm" id="histDate" onchange="filterHistory()"/>
+      <input type="text" class="form-input-sm" placeholder="Search patient name..." id="histSearch" oninput="filterHistory()" style="width:200px"/>
+      <button class="action-btn export" onclick="exportCSV()">Export CSV</button>
+      <button class="action-btn clear" onclick="clearHistory()">Clear History</button>
+      <span class="record-count" id="histCount">0 records</span>
+    </div>
+    <div class="hist-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Patient Name</th>
+            <th>Date and Time</th>
+            <th>Temperature</th>
+            <th>Heart Rate</th>
+            <th>SpO2</th>
+            <th>Breathing</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="histBody">
+          <tr><td colspan="7" style="text-align:center;color:var(--ink-4);padding:48px 20px;font-size:13px;font-family:Plus Jakarta Sans,sans-serif">Connect your ESP32 locket to start recording health data</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ EMERGENCY ══ -->
+  <div class="page" id="page-emergency">
+    <div class="emer-hero-banner">
+      <div class="emer-hero-bg"></div>
+      <div class="emer-hero-overlay"></div>
+      <div class="emer-hero-content">
+        <div class="emer-hero-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.69h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+          <div class="emer-hero-title">Emergency Contacts</div>
+          <div class="emer-hero-sub">Tap any card to call instantly. VitalCare auto-alerts on critical vital detection.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="emer-cards">
+      <div class="e-card doc">
+        <div class="e-card-header">
+          <div class="e-card-img">
+            <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=120&h=120&fit=crop&crop=face" onerror="this.style.display='none'" alt="doctor"/>
+          </div>
+          <div>
+            <div class="e-type">Primary Doctor</div>
+            <div class="e-name" id="docName">Dr. Ramesh Kumar</div>
+            <div class="e-num" id="docNum">+91 98765 43210</div>
+          </div>
+        </div>
+        <button class="e-call-btn" onclick="callContact('docNum')">Call Doctor</button>
+      </div>
+      <div class="e-card amb">
+        <div class="e-card-header">
+          <div class="e-card-img">
+            <img src="https://images.unsplash.com/photo-1587745416684-47953f16f02f?w=120&h=120&fit=crop" onerror="this.style.display='none'" alt="ambulance"/>
+          </div>
+          <div>
+            <div class="e-type">Ambulance Services</div>
+            <div class="e-name" id="ambName">Emergency Services</div>
+            <div class="e-num" id="ambNum">108 / 112</div>
+          </div>
+        </div>
+        <button class="e-call-btn" onclick="callContact('ambNum')">Call Ambulance</button>
+      </div>
+      <div class="e-card fam">
+        <div class="e-card-header">
+          <div class="e-card-img">
+            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=120&h=120&fit=crop" onerror="this.style.display='none'" alt="family"/>
+          </div>
+          <div>
+            <div class="e-type">Family / Friend</div>
+            <div class="e-name" id="famName">Emergency Contact</div>
+            <div class="e-num" id="famNum">+91 91234 56789</div>
+          </div>
+        </div>
+        <button class="e-call-btn" onclick="callContact('famNum')">Call Family</button>
+      </div>
+    </div>
+
+    <div class="emer-form-box">
+      <div class="form-box-title">Update Emergency Contacts</div>
+      <div class="form-grid2">
+        <div class="form-field"><label>Doctor Name</label><input id="fDocN" placeholder="Dr. Full Name"/></div>
+        <div class="form-field"><label>Doctor Phone Number</label><input id="fDocP" placeholder="+91 XXXXX XXXXX"/></div>
+        <div class="form-field"><label>Ambulance Number</label><input id="fAmbP" placeholder="108 / 112"/></div>
+        <div class="form-field"><label>Family Contact Name</label><input id="fFamN" placeholder="Contact Name"/></div>
+        <div class="form-field"><label>Family Phone Number</label><input id="fFamP" placeholder="+91 XXXXX XXXXX"/></div>
+      </div>
+      <button class="save-btn" onclick="saveEmergencyContacts()">Save Contacts</button>
+    </div>
+  </div>
+
+  <!-- ══ PROFILE ══ -->
+  <div class="page" id="page-profile">
+    <div class="profile-hero-card">
+      <div class="profile-hero-bg"></div>
+      <div class="profile-hero-overlay"></div>
+      <div class="profile-hero-content">
+        <div class="profile-av-large">
+          <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face" onerror="this.style.display='none'" alt="profile"/>
+        </div>
+        <div>
+          <div class="profile-id-chip">VitalCare ID: VC-2026-001 &nbsp;|&nbsp; ESP32 Locket Active</div>
+          <div class="profile-name-large">Sakshi Reddy</div>
+          <div class="profile-tags-row">
+            <span class="profile-tag">Age: 20</span>
+            <span class="profile-tag">Blood Group: B+</span>
+            <span class="profile-tag">PalmGuard Team</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-cards-grid">
+      <div class="profile-card">
+        <div class="profile-card-title">Personal Information</div>
+        <div class="form-field" style="margin-bottom:12px"><label>Full Name</label><input value="Sakshi Reddy"/></div>
+        <div class="form-field" style="margin-bottom:12px"><label>Age</label><input value="20"/></div>
+        <div class="form-field" style="margin-bottom:12px"><label>Blood Group</label><input value="B+"/></div>
+        <div class="form-field" style="margin-bottom:12px"><label>Known Medical Conditions</label><input placeholder="None known"/></div>
+        <div class="form-field" style="margin-bottom:16px"><label>Allergies</label><input placeholder="None"/></div>
+        <button class="save-btn">Save Profile</button>
+      </div>
+
+      <div class="profile-card">
+        <div class="profile-card-title">Privacy and Security Settings</div>
+        <div class="toggle-row">
+          <div><div class="toggle-row-label">Data Encryption</div><div class="toggle-row-sub">Encrypt all health data transmissions</div></div>
+          <label class="toggle-switch"><input type="checkbox" checked/><div class="toggle-track"></div></label>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-row-label">Anomaly Alerts</div><div class="toggle-row-sub">Push notifications for abnormal vitals</div></div>
+          <label class="toggle-switch"><input type="checkbox" checked/><div class="toggle-track"></div></label>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-row-label">Auto Save History</div><div class="toggle-row-sub">Record every reading automatically</div></div>
+          <label class="toggle-switch"><input type="checkbox" checked/><div class="toggle-track"></div></label>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-row-label">Emergency Auto Alert</div><div class="toggle-row-sub">Auto alert emergency contacts on critical vitals</div></div>
+          <label class="toggle-switch"><input type="checkbox"/><div class="toggle-track"></div></label>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-row-label">Location Sharing</div><div class="toggle-row-sub">Share location with emergency services</div></div>
+          <label class="toggle-switch"><input type="checkbox"/><div class="toggle-track"></div></label>
+        </div>
+        <button class="logout-button" onclick="if(confirm('Log out from VitalCare?'))showToast('Logged out successfully','success')">Log Out</button>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+</div><!-- /shell -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+// ══ APP STATE ══
+let ws = null;
+let liveData = { temperature: 0, heartRate: 0, spo2: 0, breathingRate: 0 };
+let historyRecords = [];
+const CHART_MAX = 30;
+const chartBuffers = { hr:[], sp:[], tm:[], br:[], lb:[] };
+
+// ══ PAGE NAVIGATION ══
+const pageConfig = {
+  dashboard: { title:'Health Dashboard', sub:'Real-time vitals from your ESP32 locket' },
+  chatbot:   { title:'AI Health Assistant', sub:'PalmGuard AI — powered by live sensor data' },
+  history:   { title:'Health History', sub:'Complete recorded health readings with trends' },
+  emergency: { title:'Emergency Contacts', sub:'Quick access to emergency services' },
+  profile:   { title:'My Profile', sub:'Personal health profile and settings' }
+};
+function navigate(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (el) el.classList.add('active');
+  const cfg = pageConfig[id];
+  document.getElementById('pageHeading').textContent = cfg.title;
+  document.getElementById('pageSub').textContent = cfg.sub;
+}
+
+// ══ WEBSOCKET ══
+function connectESP() {
+  const ip = document.getElementById('ipInput').value.trim();
+  if (!ip) return;
+  if (ws) { ws.close(); ws = null; }
+  try {
+    ws = new WebSocket('ws://' + ip + ':81');
+    ws.onopen = () => {
+      document.getElementById('wsDot').classList.add('live');
+      document.getElementById('wsText').textContent = 'Connected — Live';
+      addNotification('ESP32 Connected', 'Live data streaming from ' + ip + ':81');
+      showToast('ESP32 locket connected and streaming data', 'success');
+    };
+    ws.onmessage = e => {
+      try { processVitalData(JSON.parse(e.data)); } catch(_) {}
+    };
+    ws.onclose = () => {
+      document.getElementById('wsDot').classList.remove('live');
+      document.getElementById('wsText').textContent = 'Disconnected';
+    };
+    ws.onerror = () => {
+      document.getElementById('wsText').textContent = 'Connection failed';
+      showToast('Could not connect. Check IP address and WiFi network.', 'danger');
+    };
+  } catch(_) { showToast('Invalid connection details', 'danger'); }
+}
+
+// ══ DATA PROCESSING ══
+function processVitalData(d) {
+  liveData = d;
+  const t = +(d.temperature || 0);
+  const h = +(d.heartRate || 0);
+  const s = +(d.spo2 || 0);
+  const b = +(d.breathingRate || 0);
+
+  // Update display values
+  document.getElementById('tv').textContent = t.toFixed(1);
+  document.getElementById('hv').textContent = h;
+  document.getElementById('sv').textContent = s;
+  document.getElementById('bv').textContent = b.toFixed(1);
+
+  // Progress bars
+  document.getElementById('tbar').style.width = Math.min(100, Math.max(0, ((t - 35) / 6) * 100)) + '%';
+  document.getElementById('hbar').style.width = Math.min(100, (h / 200) * 100) + '%';
+  document.getElementById('sbar').style.width = s + '%';
+  document.getElementById('bbar').style.width = Math.min(100, (b / 40) * 100) + '%';
+
+  // Status badges
+  setVitalBadge('tbadge', t >= 38 ? 'bad' : t >= 37.2 ? 'warn' : 'ok', t >= 38 ? 'High' : t >= 37.2 ? 'Elevated' : 'Normal');
+  setVitalBadge('hbadge', h >= 120 || (h > 0 && h < 50) ? 'bad' : h > 100 ? 'warn' : 'ok', h >= 120 ? 'Tachy' : h < 50 && h > 0 ? 'Brady' : h > 100 ? 'High' : 'Normal');
+  setVitalBadge('sbadge', s > 0 && s < 90 ? 'bad' : s > 0 && s < 95 ? 'warn' : 'ok', s > 0 && s < 90 ? 'Critical' : s > 0 && s < 95 ? 'Low' : 'Normal');
+  setVitalBadge('bbadge', b > 25 ? 'bad' : b > 20 || (b > 0 && b < 12) ? 'warn' : 'ok', b > 25 ? 'High' : b > 20 ? 'Elevated' : b > 0 && b < 12 ? 'Low' : 'Normal');
+
+  // Health analysis
+  analyzeHealthStatus(t, h, s, b);
+
+  // Update charts
+  const timeLabel = new Date().toLocaleTimeString('en', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  chartBuffers.lb.push(timeLabel);
+  chartBuffers.hr.push(h); chartBuffers.sp.push(s);
+  chartBuffers.tm.push(t); chartBuffers.br.push(b);
+  if (chartBuffers.lb.length > CHART_MAX) {
+    ['lb','hr','sp','tm','br'].forEach(k => chartBuffers[k].shift());
+  }
+  refreshCharts();
+
+  // Save to history
+  historyRecords.unshift({
+    name: 'Sakshi Reddy',
+    time: new Date().toLocaleString(),
+    temp: t.toFixed(1), hr: h, spo2: s,
+    breathing: b.toFixed(1),
+    status: getHealthStatus(t, h, s, b)
+  });
+  if (historyRecords.length > 300) historyRecords.pop();
+  renderHistoryTable();
+
+  // Update timestamp and chatbot pills
+  document.getElementById('heroTime').textContent = new Date().toLocaleTimeString();
+  document.getElementById('pillHR').textContent = 'HR: ' + h;
+  document.getElementById('pillSP').textContent = 'SpO2: ' + s + '%';
+  document.getElementById('pillBR').textContent = 'Br: ' + b.toFixed(1);
+
+  // Check for alerts
+  checkHealthAlerts(t, h, s, b);
+}
+
+function setVitalBadge(id, cls, text) {
+  const el = document.getElementById(id);
+  el.className = 'vital-status-badge ' + cls;
+  el.textContent = text;
+}
+
+function getHealthStatus(t, h, s, b) {
+  if (s > 0 && s < 90) return 'critical';
+  if (t > 39 || h > 130 || (s > 0 && s < 94)) return 'high';
+  if (t > 38 || h > 100 || (s > 0 && s < 95) || b > 20) return 'moderate';
+  return 'normal';
+}
+
+function analyzeHealthStatus(t, h, s, b) {
+  const status = getHealthStatus(t, h, s, b);
+  const heroMap = {
+    normal:   { chip:'All Systems Normal', title:'Healthy &amp; Monitored', sub:'Your vitals are within healthy range. PalmGuard locket is actively monitoring your health.', cond:'Healthy' },
+    moderate: { chip:'Moderate Alert', title:'Minor Concern Detected', sub:'Some vitals are slightly outside normal range. Monitor closely and rest if needed.', cond:'Mild Concern' },
+    high:     { chip:'High Risk Alert', title:'Health Risk Detected', sub:'Multiple abnormal vitals detected. Consider consulting a healthcare provider soon.', cond:'At Risk' },
+    critical: { chip:'CRITICAL ALERT', title:'Immediate Attention Needed', sub:'SpO2 is critically low. Seek emergency medical help immediately.', cond:'EMERGENCY' }
+  };
+  const c = heroMap[status];
+  document.getElementById('heroChipText').textContent = c.chip;
+  document.getElementById('heroTitle').innerHTML = c.title;
+  document.getElementById('heroSub').textContent = c.sub;
+  document.getElementById('heroCond').textContent = c.cond;
+
+  setRiskTag('rFever', t > 38 ? 'high' : t > 37.2 ? 'medium' : 'low');
+  setRiskTag('rResp',  s > 0 && s < 90 ? 'high' : s > 0 && s < 95 ? 'medium' : 'low');
+  setRiskTag('rCard',  h > 120 || h < 50 ? 'high' : h > 100 ? 'medium' : 'low');
+  setRiskTag('rStr',   h > 100 && b > 18 && (s >= 95 || s === 0) ? 'medium' : 'low');
+}
+
+function setRiskTag(id, level) {
+  const el = document.getElementById(id);
+  el.className = 'risk-tag ' + level;
+  el.textContent = level === 'high' ? 'High Risk' : level === 'medium' ? 'Medium Risk' : 'Low Risk';
+}
+
+// Alert cooldown
+const alertCooldowns = {};
+function checkHealthAlerts(t, h, s, b) {
+  const now = Date.now();
+  if (s > 0 && s < 90 && (!alertCooldowns.spo2 || now - alertCooldowns.spo2 > 30000)) {
+    showToast('Critical: SpO2 at ' + s + '%. Seek emergency help immediately.', 'danger');
+    addNotification('Critical SpO2 Alert', 'SpO2 dropped to ' + s + '%. Emergency attention required.');
+    alertCooldowns.spo2 = now;
+  }
+  if (t > 38.5 && (!alertCooldowns.temp || now - alertCooldowns.temp > 60000)) {
+    showToast('High Temperature: ' + t.toFixed(1) + ' degrees C detected.', 'danger');
+    alertCooldowns.temp = now;
+  }
+  if (h > 120 && (!alertCooldowns.hr || now - alertCooldowns.hr > 60000)) {
+    showToast('High Heart Rate: ' + h + ' BPM. Monitor closely.', 'danger');
+    alertCooldowns.hr = now;
+  }
+}
+
+// ══ CHARTS ══
+let appCharts = {};
+function createChart(canvasId, color, dataArray) {
+  return new Chart(document.getElementById(canvasId), {
+    type: 'line',
+    data: {
+      labels: chartBuffers.lb,
+      datasets: [{
+        data: dataArray, borderColor: color,
+        backgroundColor: color + '18', borderWidth: 2,
+        pointRadius: 0, tension: 0.4, fill: true
+      }]
+    },
+    options: {
+      responsive: true, animation: { duration: 250 },
+      plugins: { legend: { display: false }, tooltip: { enabled: false } },
+      scales: {
+        x: { ticks: { color: '#8a857d', font: { size: 9 }, maxTicksLimit: 5 }, grid: { color: '#f0ede8' }, border: { display: false } },
+        y: { ticks: { color: '#8a857d', font: { size: 9 } }, grid: { color: '#f0ede8' }, border: { display: false } }
+      }
+    }
+  });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  appCharts.hr = createChart('cHR', '#e85d3a', chartBuffers.hr);
+  appCharts.sp = createChart('cSP', '#2563eb', chartBuffers.sp);
+  appCharts.tm = createChart('cTM', '#0d7a6e', chartBuffers.tm);
+  appCharts.br = createChart('cBR', '#5a8a72', chartBuffers.br);
+  setTimeout(connectESP, 800);
+});
+
+function refreshCharts() {
+  if (!appCharts.hr) return;
+  const map = { hr: 'hr', sp: 'sp', tm: 'tm', br: 'br' };
+  Object.entries(map).forEach(([chartKey, dataKey]) => {
+    appCharts[chartKey].data.labels = [...chartBuffers.lb];
+    appCharts[chartKey].data.datasets[0].data = [...chartBuffers[dataKey]];
+    appCharts[chartKey].update('none');
+  });
+}
+
+// ══ HISTORY ══
+function renderHistoryTable(data) {
+  const records = data || historyRecords;
+  document.getElementById('histCount').textContent = records.length + ' records';
+  const tbody = document.getElementById('histBody');
+  if (!records.length) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--ink-4);padding:48px;font-size:13px;font-family:Plus Jakarta Sans,sans-serif">No records yet. Connect ESP32 to start monitoring.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = records.slice(0, 100).map(r => `
+    <tr>
+      <td style="font-family:Plus Jakarta Sans,sans-serif;font-weight:600;color:var(--ink)">${r.name}</td>
+      <td style="font-family:Plus Jakarta Sans,sans-serif;font-size:12px">${r.time}</td>
+      <td style="color:var(--teal)">${r.temp} C</td>
+      <td style="color:var(--coral)">${r.hr} bpm</td>
+      <td style="color:var(--blue)">${r.spo2}%</td>
+      <td style="color:var(--sage)">${r.breathing}/min</td>
+      <td><span class="status-chip ${r.status}">${r.status.charAt(0).toUpperCase() + r.status.slice(1)}</span></td>
+    </tr>
+  `).join('');
+}
+
+function filterHistory() {
+  const dateVal = document.getElementById('histDate').value;
+  const searchVal = document.getElementById('histSearch').value.toLowerCase();
+  let filtered = historyRecords;
+  if (dateVal) filtered = filtered.filter(r => r.time.includes(new Date(dateVal).toLocaleDateString()));
+  if (searchVal) filtered = filtered.filter(r => r.name.toLowerCase().includes(searchVal));
+  renderHistoryTable(filtered);
+}
+
+function clearHistory() {
+  if (confirm('Clear all health history records?')) {
+    historyRecords = [];
+    renderHistoryTable();
+  }
+}
+
+function exportCSV() {
+  if (!historyRecords.length) { showToast('No data to export yet', 'danger'); return; }
+  const csv = [
+    'Patient Name,Date and Time,Temperature (C),Heart Rate (bpm),SpO2 (%),Breathing Rate (/min),Status',
+    ...historyRecords.map(r => `${r.name},${r.time},${r.temp},${r.hr},${r.spo2},${r.breathing},${r.status}`)
+  ].join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'vitalcare_health_data_' + new Date().toISOString().split('T')[0] + '.csv';
+  a.click();
+  showToast('Health data exported as CSV file', 'success');
+}
+
+function exportData() {
+  const currentPage = document.querySelector('.page.active').id.replace('page-','');
+  if (currentPage === 'history') exportCSV();
+  else showToast('Switch to History page to export data', 'success');
+}
+
+// ══ EMERGENCY ══
+function callContact(id) {
+  const num = document.getElementById(id).textContent;
+  showToast('Calling ' + num + '...', 'success');
+}
+function saveEmergencyContacts() {
+  const fields = { fDocN:'docName', fDocP:'docNum', fAmbP:'ambNum', fFamN:'famName', fFamP:'famNum' };
+  Object.entries(fields).forEach(([from, to]) => {
+    const val = document.getElementById(from).value;
+    if (val) document.getElementById(to).textContent = val;
+  });
+  showToast('Emergency contacts updated successfully', 'success');
+}
+
+// ══ CHATBOT ══
+const aiKnowledgeBase = {
+  analyze: () => {
+    const d = liveData;
+    const status = getHealthStatus(d.temperature, d.heartRate, d.spo2, d.breathingRate);
+    return `<strong>Real-time Vitals Analysis</strong><br><br>
+Temperature: <strong>${d.temperature?.toFixed(1) || '--'} C</strong> — ${d.temperature > 38 ? 'Elevated, monitor closely' : d.temperature > 37.2 ? 'Slightly above normal' : 'Normal range'}<br>
+Heart Rate: <strong>${d.heartRate || 0} bpm</strong> — ${d.heartRate > 100 ? 'Above normal (tachycardia)' : d.heartRate < 60 ? 'Below normal (bradycardia)' : 'Normal range'}<br>
+SpO2: <strong>${d.spo2 || 0}%</strong> — ${d.spo2 < 90 && d.spo2 > 0 ? 'Critical — immediate action needed' : d.spo2 < 95 && d.spo2 > 0 ? 'Below normal, monitor closely' : 'Normal range'}<br>
+Breathing: <strong>${d.breathingRate?.toFixed(1) || 0} breaths/min</strong> — ${d.breathingRate > 20 ? 'Elevated rate' : d.breathingRate < 12 ? 'Slow breathing' : 'Normal range'}<br><br>
+Overall Health Status: <strong>${status.toUpperCase()}</strong><br><br>
+${status === 'normal' ? 'All vitals are within healthy parameters. Your PalmGuard locket is functioning correctly.' : 'Some values require attention. Follow the recommendations above and consult a doctor if needed.'}`;
+  },
+  risk: () => {
+    const d = liveData;
+    const risks = [];
+    if (d.temperature > 38) risks.push('Fever — possible bacterial or viral infection');
+    if (d.spo2 < 95 && d.spo2 > 0) risks.push('Low blood oxygen — respiratory concern');
+    if (d.heartRate > 120) risks.push('Tachycardia — elevated heart rate');
+    if (d.heartRate > 100 && d.breathingRate > 18) risks.push('Possible stress or anxiety pattern');
+    if (d.spo2 < 90 && d.spo2 > 0) risks.push('CRITICAL: Severe hypoxemia — call emergency services immediately');
+    return risks.length
+      ? `<strong>Health Risk Assessment:</strong><br><br>${risks.map(r => '&bull; ' + r).join('<br>')}<br><br>Recommendation: Monitor continuously and consult a healthcare provider if symptoms persist or worsen.`
+      : '<strong>No significant health risks detected.</strong><br><br>All your vital parameters are within safe and healthy ranges. Continue monitoring regularly for best results.';
+  },
+  breathing: () => {
+    const b = liveData.breathingRate || 0;
+    const s = liveData.spo2 || 0;
+    if (b > 20 && s < 95 && s > 0) return `Breathing Rate: <strong>${b.toFixed(1)} breaths/min</strong> with SpO2 at <strong>${s}%</strong><br><br>This combination of rapid breathing and low oxygen may indicate respiratory distress, asthma episode, or anxiety. If breathing difficulty persists, please seek medical attention immediately.`;
+    if (b > 20) return `Breathing Rate: <strong>${b.toFixed(1)} breaths/min</strong> — slightly elevated above normal range of 12 to 20 breaths per minute.<br><br>Possible causes: physical activity, stress, mild fever, or anxiety. Try slow deep breathing exercises: inhale for 4 seconds, hold for 4, exhale for 6 seconds.`;
+    return `Breathing Rate: <strong>${b.toFixed(1)} breaths/min</strong> — within normal range of 12 to 20 breaths per minute.<br><br>Your respiratory pattern appears healthy and regular. The INMP411 MEMS microphone in your locket is detecting normal breathing sounds.`;
+  },
+  spo2: () => `<strong>How to Improve Blood Oxygen (SpO2):</strong><br><br>
+1. Practice diaphragmatic deep breathing for 10 minutes daily<br>
+2. Light physical activity such as walking improves lung capacity<br>
+3. Ensure fresh air circulation — open windows when possible<br>
+4. Stay well hydrated to support oxygen transport in blood<br>
+5. Use pursed lip breathing technique during rest<br>
+6. Sleep with head slightly elevated if nighttime levels are low<br><br>
+Current SpO2: <strong>${liveData.spo2 || 0}%</strong><br>
+${(liveData.spo2 || 0) < 90 ? 'Critical level — seek emergency help immediately' : (liveData.spo2 || 0) < 95 ? 'Below normal — begin breathing exercises now' : 'Healthy level — keep up your current habits'}`,
+  diseases: () => `<strong>Health Conditions Detectable from Your Vitals:</strong><br><br>
+High Temperature + Low SpO2 + Rapid Breathing<br>&nbsp;&nbsp;&rarr; Pneumonia, COVID-19, Severe respiratory infection<br><br>
+Low SpO2 (below 94%) + Elevated Breathing Rate<br>&nbsp;&nbsp;&rarr; Asthma attack, COPD, Bronchitis, Breathing distress<br><br>
+Heart Rate above 120 bpm + Low SpO2<br>&nbsp;&nbsp;&rarr; Cardiac stress, Tachyarrhythmia, Heart failure risk<br><br>
+Heart Rate 100 to 120 bpm with Normal SpO2<br>&nbsp;&nbsp;&rarr; Anxiety disorder, Stress response, Physical exertion<br><br>
+Temperature above 39 degrees C<br>&nbsp;&nbsp;&rarr; High fever from bacterial or viral infection<br><br>
+Note: VitalCare is designed for preventive health monitoring and wellness guidance. It is not a substitute for professional medical diagnosis or treatment.`,
+  ranges: () => `<strong>Normal Vital Signs Reference Guide:</strong><br><br>
+Body Temperature<br>&nbsp;Hypothermia: below 36 C<br>&nbsp;Normal: 36.1 to 37.2 C<br>&nbsp;Low fever: 37.3 to 38 C<br>&nbsp;High fever: above 38 C<br><br>
+Heart Rate<br>&nbsp;Bradycardia: below 60 bpm<br>&nbsp;Normal: 60 to 100 bpm<br>&nbsp;Tachycardia: above 100 bpm<br><br>
+Blood Oxygen (SpO2)<br>&nbsp;Normal: 95 to 100%<br>&nbsp;Mild concern: 90 to 94%<br>&nbsp;Critical: below 90%<br><br>
+Breathing Rate<br>&nbsp;Normal: 12 to 20 breaths per minute<br>&nbsp;Elevated: 20 to 25<br>&nbsp;Critical: above 25`
+};
+
+function getAIResponse(message) {
+  const m = message.toLowerCase();
+  if (m.includes('analyz') || m.includes('vital') || m.includes('current')) return aiKnowledgeBase.analyze();
+  if (m.includes('disease') || m.includes('detect') || m.includes('condition')) return aiKnowledgeBase.diseases();
+  if (m.includes('risk') || m.includes('danger') || m.includes('concern')) return aiKnowledgeBase.risk();
+  if (m.includes('breath')) return aiKnowledgeBase.breathing();
+  if (m.includes('spo2') || m.includes('oxygen') || m.includes('improve')) return aiKnowledgeBase.spo2();
+  if (m.includes('range') || m.includes('normal') || m.includes('healthy')) return aiKnowledgeBase.ranges();
+  if (m.includes('fever') || m.includes('temp')) return `Body Temperature Reading: <strong>${liveData.temperature?.toFixed(1) || '--'} C</strong><br><br>${(liveData.temperature || 0) > 38 ? 'Temperature is elevated above normal. Stay hydrated, rest, and monitor every 30 minutes. If above 39C with breathing difficulty, consult a doctor immediately.' : 'Temperature is within normal range. A fever is defined as temperature above 38 C.'}<br><br>Normal range: 36.1 to 37.2 C`;
+  if (m.includes('chest') || m.includes('pain')) return 'Chest pain combined with breathing difficulty or low SpO2 can be a cardiac emergency. Call emergency services at 108 or 112 immediately if you experience severe chest pain. Do not delay seeking medical attention.';
+  if (m.includes('stress') || m.includes('anxiety') || m.includes('relax')) return `Current readings — HR: <strong>${liveData.heartRate || 0} bpm</strong>, SpO2: <strong>${liveData.spo2 || 0}%</strong><br><br>${liveData.heartRate > 100 && liveData.spo2 >= 95 ? 'Pattern is consistent with stress or anxiety response.' : 'No stress pattern detected in current readings.'}<br><br>Relaxation techniques: 4-7-8 breathing (inhale 4 sec, hold 7, exhale 8), progressive muscle relaxation, drink water, take a short walk.`;
+  const ctx = liveData.heartRate ? `Based on your live readings (HR: ${liveData.heartRate} bpm, SpO2: ${liveData.spo2}%, Temp: ${liveData.temperature?.toFixed(1)}C, Breathing: ${liveData.breathingRate?.toFixed(1)}/min): ` : '';
+  return ctx + 'I can help you understand your health data and provide personalized wellness guidance. Try asking me to analyze your vitals, check health risks, explain what diseases can be detected, or describe the normal ranges for all vital signs.';
+}
+
+function appendMessage(text, sender) {
+  const msgs = document.getElementById('chatMsgs');
+  const time = new Date().toLocaleTimeString('en', { hour: '2-digit', minute: '2-digit' });
+  const botImg = 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=60&h=60&fit=crop';
+  const userImg = 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=60&h=60&fit=crop&crop=face';
+  const div = document.createElement('div');
+  div.className = 'msg-group' + (sender === 'user' ? ' user' : '');
+  div.innerHTML = `
+    <div class="msg-avatar"><img src="${sender === 'bot' ? botImg : userImg}" onerror="this.style.background='var(--canvas)'" alt="${sender}"/></div>
+    <div>
+      <div class="msg-bubble">${text}</div>
+      <div class="msg-time">${time}</div>
+    </div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTypingIndicator() {
+  const msgs = document.getElementById('chatMsgs');
+  const div = document.createElement('div');
+  div.className = 'msg-group'; div.id = 'typingMsg';
+  div.innerHTML = `<div class="msg-avatar"><img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=60&h=60&fit=crop" onerror="this.style.background='var(--canvas)'" alt="bot"/></div><div class="msg-bubble"><div class="typing-indicator"><span></span><span></span><span></span></div></div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function sendMsg() {
+  const input = document.getElementById('chatIn');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  appendMessage(text, 'user');
+  showTypingIndicator();
+  setTimeout(() => {
+    const t = document.getElementById('typingMsg');
+    if (t) t.remove();
+    appendMessage(getAIResponse(text), 'bot');
+  }, 700 + Math.random() * 400);
+}
+
+function quickSend(text) {
+  document.getElementById('chatIn').value = text;
+  sendMsg();
+}
+
+// ══ NOTIFICATIONS ══
+function toggleNotif() {
+  document.getElementById('notifDrop').classList.toggle('open');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('#notifDrop') && !e.target.closest('.notif-btn'))
+    document.getElementById('notifDrop').classList.remove('open');
+});
+function addNotification(title, desc) {
+  document.getElementById('notifDot').style.display = 'block';
+  const list = document.getElementById('notifList');
+  const div = document.createElement('div');
+  div.className = 'notif-item';
+  div.innerHTML = `
+    <div class="notif-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+    <div>
+      <div class="notif-title">${title}</div>
+      <div class="notif-desc">${desc}</div>
+      <div class="notif-time">${new Date().toLocaleTimeString()}</div>
+    </div>`;
+  list.insertBefore(div, list.firstChild);
+}
+function clearNotifs() {
+  document.getElementById('notifList').innerHTML = '<div class="notif-item"><div class="notif-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div><div class="notif-title">All clear</div><div class="notif-desc">No new notifications</div></div></div>';
+  document.getElementById('notifDot').style.display = 'none';
+}
+
+// ══ TOAST ══
+function showToast(message, type = 'success') {
+  const container = document.getElementById('toasts');
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + type;
+  const checkSvg = `<svg viewBox="0 0 24 24" style="fill:none;stroke-linecap:round;stroke-linejoin:round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
+  const warnSvg = `<svg viewBox="0 0 24 24" style="fill:none;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
+  toast.innerHTML = `
+    <div class="toast-icon-wrap">${type === 'danger' ? warnSvg : checkSvg}</div>
+    <div class="toast-message">${message}</div>
+    <button class="toast-close" onclick="this.parentElement.remove()">&#215;</button>`;
+  container.appendChild(toast);
+  setTimeout(() => { if (toast.parentElement) toast.remove(); }, 5000);
+}
+</script>
+</body>
+</html>

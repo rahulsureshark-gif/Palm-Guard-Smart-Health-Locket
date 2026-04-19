@@ -1,0 +1,91 @@
+=============================================
+  VitalCare — Android App Build Guide
+  Run ALL commands in Windows CMD or Terminal
+=============================================
+
+STEP 1 — Open Command Prompt
+------------------------------
+Press Win + R → type "cmd" → press Enter
+
+STEP 2 — Go to Desktop and create folder
+------------------------------------------
+cd Desktop
+mkdir VitalCare
+cd VitalCare
+
+STEP 3 — Initialize npm project
+------------------------------------------
+npm init -y
+
+STEP 4 — Install Capacitor
+------------------------------------------
+npm install @capacitor/core @capacitor/cli @capacitor/android
+
+STEP 5 — Initialize Capacitor
+------------------------------------------
+npx cap init VitalCare com.palmguard.vitalcare --web-dir www
+
+STEP 6 — Create www folder and copy your HTML
+------------------------------------------
+mkdir www
+
+Then manually copy "vitalcare_final.html" into the www folder
+and RENAME it to "index.html"
+
+So final path should be:
+  Desktop\VitalCare\www\index.html
+
+STEP 7 — Add Android platform
+------------------------------------------
+npx cap add android
+
+STEP 8 — Sync files
+------------------------------------------
+npx cap sync android
+
+STEP 9 — Open in Android Studio
+------------------------------------------
+npx cap open android
+
+STEP 10 — Build APK in Android Studio
+------------------------------------------
+In Android Studio:
+  1. Wait for Gradle to finish loading (bottom progress bar)
+  2. Go to: Build → Build Bundle(s) / APK(s) → Build APK(s)
+  3. Wait for build to complete
+  4. Click "locate" in the popup to find your APK file
+  5. APK will be at:
+     VitalCare\android\app\build\outputs\apk\debug\app-debug.apk
+
+STEP 11 — Install on Android phone
+------------------------------------------
+  1. Connect your Android phone via USB
+  2. Enable Developer Options on phone:
+     Settings → About Phone → tap Build Number 7 times
+  3. Enable USB Debugging:
+     Settings → Developer Options → USB Debugging ON
+  4. In Android Studio click green "Run" button
+  5. Select your phone → app installs automatically!
+
+=============================================
+  IMPORTANT NOTES
+=============================================
+
+1. Make sure Node.js is installed (nodejs.org)
+2. Make sure Android Studio is installed
+3. Make sure Java JDK 17 is installed
+   Download: https://adoptium.net/
+4. Your phone and laptop must be on same WiFi (Palmiq hotspot)
+   for the ESP32 connection to work in the app
+
+=============================================
+  FOLDER STRUCTURE
+=============================================
+
+VitalCare/
+├── www/
+│   └── index.html        ← your vitalcare_final.html renamed
+├── android/              ← created by npx cap add android
+├── node_modules/         ← created by npm install
+├── package.json          ← created by npm init
+└── capacitor.config.json ← created by npx cap init
